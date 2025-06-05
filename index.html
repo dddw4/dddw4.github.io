@@ -1,73 +1,33 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Scrittura file.txt oltre i limiti del buffer</title>
+  <meta charset="UTF-8">
+  <title>Reindirizzamento con Bottone</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      margin: 2rem;
-      background-color: #f5f5f5;
-    }
-    h1 {
-      color: #333;
+      text-align: center;
+      padding-top: 100px;
+      background-color: #f0f0f0;
     }
     button {
-      padding: 0.6rem 1.2rem;
-      font-size: 1rem;
-      border: none;
-      border-radius: 4px;
-      background-color: #1976d2;
+      padding: 1rem 2rem;
+      font-size: 1.2rem;
       color: #fff;
+      background-color: #007bff;
+      border: none;
+      border-radius: 6px;
       cursor: pointer;
-      transition: background-color 0.2s ease;
     }
     button:hover {
-      background-color: #155a9c;
-    }
-    #status {
-      margin-top: 1rem;
-      font-size: 0.95rem;
-      color: #555;
+      background-color: #0056b3;
     }
   </style>
 </head>
 <body>
-  <h1>Scrivi su <span style="font-family: monospace;">file.txt</span> “oltre i limiti del buffer”</h1>
-  <p>
-    Clicca il pulsante qui sotto per invocare il server Node.js che alloca un buffer di 10 byte
-    (con <code>Buffer.allocUnsafe(10)</code>) e poi scrive in quel buffer 15 valori (quindi oltre
-    i 10 byte). Il risultato verrà salvato in <code>file.txt</code> sul server.
-  </p>
-  <button id="write-btn">Scrivi il file</button>
-  <div id="status"></div>
 
-  <script>
-    document.getElementById('write-btn').addEventListener('click', () => {
-      const statusEl = document.getElementById('status');
-      statusEl.textContent = 'Sto inviando la richiesta al server…';
+  <h1>Clicca il bottone per visitare un altro sito</h1>
+  <button onclick="window.location.href='https://example.com'">Vai a example.com</button>
 
-      fetch('/write', {
-        method: 'POST'
-      })
-        .then((res) => {
-          if (!res.ok) throw new Error('Errore ' + res.status);
-          return res.json();
-        })
-        .then((data) => {
-          if (data.success) {
-            statusEl.textContent =
-              '✅ File scritto con successo. Contenuto effettivo: ' +
-              JSON.stringify(data.bufferContent);
-          } else {
-            statusEl.textContent = '⚠️ Errore lato server: ' + data.error;
-          }
-        })
-        .catch((err) => {
-          statusEl.textContent = '❌ Errore di rete o server: ' + err.message;
-        });
-    });
-  </script>
 </body>
 </html>
